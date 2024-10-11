@@ -1,4 +1,4 @@
-const BACKENDURL = "https://pooi-five.vercel.app"
+const BACKENDURL = "https://pooi-five.vercel.app/votes"
 
 // 各Canvasの横幅、縦幅（canvasFront:投げる画面、canvasBack：落ちる画面）
 const elementFront = document.getElementById("canvasFront")
