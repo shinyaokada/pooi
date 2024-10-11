@@ -94,10 +94,10 @@ client.connect().then(() => {
 }).catch(console.error);
 
 // Add a catch-all route for debugging
-app.use('*', (req, res) => {
-    console.log(`Accessed undefined route: ${req.method} ${req.url}`);
-    res.status(455).json({ error: 'Not Found nida' });
-});
+// app.use('*', (req, res) => {
+//     console.log(`Accessed undefined route: ${req.method} ${req.url}`);
+//     res.status(455).json({ error: 'Not Found nida' });
+// });
 
 module.exports = app;
 
