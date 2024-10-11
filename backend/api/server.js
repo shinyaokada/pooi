@@ -15,7 +15,7 @@ app.use(express.json());
 
 // CORS設定
 app.use(cors({
-    origin: ['https://pooi-beta.vercel.app', 'http://localhost:3000'],
+    origin: ['https://pooi-anannct.vercel.app/', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
