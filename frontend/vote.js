@@ -104,7 +104,6 @@ async function submitVote(choice,kind) {
 		choices=data["choices"];
 		console.log(data)
 		choices.forEach(choice => {
-		
 			const choicePercentDiv = document.getElementById("choice-percent" + choice.id);
 			choicePercentDiv.textContent = choice.percent + "%";
 		});
@@ -122,7 +121,7 @@ async function submitVote(choice,kind) {
 
 
 // ページ全体が完全に読み込まれた時に動作する
-function engine(){
+async function engine(){
 	// Matter-Wrapを有効にする
 	Matter.use("matter-wrap");
 
