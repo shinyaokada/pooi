@@ -90,3 +90,5 @@ client.connect().then(() => {
         }
     });
 }).catch(console.error);
+
+module.exports = app;
