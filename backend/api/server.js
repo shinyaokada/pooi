@@ -15,7 +15,7 @@ app.use(express.json());
 
 // CORS設定
 app.use(cors({
-    origin: ['https://pooi-anannct.vercel.app', 'https://pooi-anannct.vercel.app/vote.html', 'http://localhost:3000'],
+    origin: ['https://pooi-anannct.vercel.app',"pooi-anannct-git-main-shinyaokadas-projects.vercel.app",        'https://pooi-anannct.vercel.app/vote.html', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
