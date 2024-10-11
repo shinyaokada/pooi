@@ -54,7 +54,7 @@ client.connect().then(() => {
             res.json(choices);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(501).json({ error: 'なんか違う' });
         }
     });
 
@@ -88,7 +88,7 @@ client.connect().then(() => {
             res.json({ msg: 'Vote added', choices:choices });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(502).json({ error: 'Noooo' });
         }
     });
 }).catch(console.error);
@@ -96,7 +96,8 @@ client.connect().then(() => {
 // Add a catch-all route for debugging
 app.use('*', (req, res) => {
     console.log(`Accessed undefined route: ${req.method} ${req.url}`);
-    res.status(404).json({ error: 'Not Found' });
+    res.status(405).json({ error: 'Not Found nida' });
 });
 
 module.exports = app;
+
