@@ -15,7 +15,7 @@ app.use(express.json());
 
 // CORS設定
 app.use(cors({
-    origin: ['https://pooi-anannct.vercel.app/vote.html', 'http://localhost:3000'],
+    origin: ['https://pooi-anannct.vercel.app', 'https://pooi-anannct.vercel.app/vote.html', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
@@ -34,6 +34,7 @@ client.connect().then(() => {
 
     // GETリクエストで投票数の集計を返すエンドポイント
     app.get('/votes', async (req, res) => {
+        console.log('GET /votes accessed');
         try {
             const totalVotes = await votesCollection.countDocuments({});
             const choicesCount = {
@@ -60,6 +61,7 @@ client.connect().then(() => {
     
     // POSTリクエストで新しい投票を追加するエンドポイント
     app.post('/votes', async (req, res) => {
+        console.log('POST /votes accessed');
         const { choice, kind } = req.body;
 
         if (![1, 2, 3].includes(choice)) {
@@ -90,5 +92,11 @@ client.connect().then(() => {
         }
     });
 }).catch(console.error);
+
+// Add a catch-all route for debugging
+app.use('*', (req, res) => {
+    console.log(`Accessed undefined route: ${req.method} ${req.url}`);
+    res.status(404).json({ error: 'Not Found' });
+});
 
 module.exports = app;
