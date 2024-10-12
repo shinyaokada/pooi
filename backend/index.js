@@ -42,11 +42,10 @@ app.get('/', async (req, res) => {
             3: await votesCollection.countDocuments({ choice: 3 })
         };
         const choices = [
-            { id: 1, name: "鶏肉", color: "#FF5900", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
-            { id: 2, name: "牛肉", color: "#1e00ff", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
-            { id: 3, name: "豚肉", color: "#15792f", percent: totalVotes ? Math.round(choicesCount[3] / totalVotes * 100) : 0 }
+            { id: 1, name: "学生の売店", color: "#FF7A00", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
+            { id: 2, name: "キッチンカー", color: "#3623E7", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
         ];
-        const question = "質問内容"
+        const question = "どっちが良かった？"
         const data = {choices:choices,msg:"ok",question:question}
         res.json(data);
     } catch (err) {
@@ -73,7 +72,6 @@ app.post('/', async (req, res) => {
         const choices = [
             { id: 1, name: "とりにく", color: "#FF5900", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
             { id: 2, name: "ぎゅうにく", color: "#1e00ff", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
-            { id: 3, name: "ぶたにく", color: "#15792f", percent: totalVotes ? Math.round(choicesCount[3] / totalVotes * 100) : 0 }
         ];
 
         res.json({ msg: 'Vote added', choices: choices });
