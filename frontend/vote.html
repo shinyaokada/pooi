@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./vote.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <title>Document</title>
 </head>
 <body>
@@ -11,6 +12,7 @@
 	<script src="//cdn.jsdelivr.net/npm/matter-wrap@0.2.0/build/matter-wrap.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-wrap/0.2.0/matter-wrap.min.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
 
     <div id="background">
@@ -116,9 +118,53 @@
 
         <!-- 最後に出てくる感謝の言葉 -->
         <div id="lastWord">
-            <p>投票感謝</p>
+            <p>投票ありがとう!<br>何度でも投票できるので友達を誘ってみんなで勢力を拡大しよう！</p>
         </div>
 
+        <!-- チュートリアル -->
+        <div id="tutorial">
+            <div class="swiper">
+                <!-- wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- スライド -->
+                    <div class="swiper-slide">
+                        <img src="./tutorial_image_1.png">
+                        <p>
+                            QRコードを読み取って<br>
+                            くれてありがとう！<br>
+                            WELCOME TO "POOI"!
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./tutorial_image_2.png">
+                        <p>
+                            POOI(ぽーい)とは？<br>
+                            ゴミ箱に設定された究極の二択に投票することができ、
+                            世界中の人たちと勢力を争うことができるゲームみたいなもの
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./tutorial_image_3.png">
+                        <p>
+                            ゴミ箱内の写真を投稿すると<br>
+                            金の投票玉になり投票数が<br>なんと２倍になるよ！<br>
+                            形勢逆転を狙え！
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <p>
+                            あなたの撮ったゴミ箱の写真と<br>
+                            投票結果は、企業のデータ収集の助けになります。<br>
+                            ぜひ、ご参加ください！
+                        </p>
+                        
+                        <div id="endTutorialButton"><p>POOIを始める</p></div>
+                    </div>
+                </div>
+                <!-- ページネーション -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
     </div>
 
     <img src="./voteBall1.svg" id="voteBall" style="display: none;">
