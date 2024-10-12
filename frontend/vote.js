@@ -457,31 +457,35 @@ async function engine(){
 			detailFlag = false;
 
 			reader.onload = function(e) {
-				const canvas = document.createElement('canvas');
-				const maxFileSize = 1024 * 1024; // 1MB in bytes
+				const img = new Image();
+				img.src = e.target.result;
 
-				let width = img.width;
-				let height = img.height;
-				const fileSize = file.size;
+				img.onload = function() {
+					const canvas = document.createElement('canvas');
+					const maxFileSize = 1024 * 1024; // 1MB in bytes
 
-				// サイズが1MBを超える場合、解像度を下げる
-				if (fileSize > maxFileSize) {
-					const scaleFactor = Math.sqrt(maxFileSize / fileSize);
-					width *= scaleFactor;
-					height *= scaleFactor;
-				}
+					let width = img.width;
+					let height = img.height;
+					const fileSize = file.size;
 
-				// キャンバスに画像を描画して解像度を変更
-				canvas.width = width;
-				canvas.height = height;
-				const ctx = canvas.getContext('2d');
-				ctx.drawImage(img, 0, 0, width, height);
+					// サイズが1MBを超える場合、解像度を下げる
+					if (fileSize > maxFileSize) {
+						const scaleFactor = Math.sqrt(maxFileSize / fileSize);
+						width *= scaleFactor;
+						height *= scaleFactor;
+					}
 
-				// 再エンコードしてBase64に変換
-				const base64Image = canvas.toDataURL('image/jpeg', 0.8); // Quality is set to 0.8 for further compression
+					// キャンバスに画像を描画して解像度を変更
+					canvas.width = width;
+					canvas.height = height;
+					const ctx = canvas.getContext('2d');
+					ctx.drawImage(img, 0, 0, width, height);
 
-				console.log(base64Image);
-			}
+					// 再エンコードしてBase64に変換
+					const base64Image = canvas.toDataURL('image/jpeg', 0.8); // Quality is set to 0.8 for further compression
+					console.log(base64Image);
+				};
+			};
 			reader.onerror = function(err){
 				console.error("エラーが発生しました:",err);
 			}
