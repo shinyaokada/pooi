@@ -31,6 +31,9 @@ const Events     = Matter.Events;
 const Mouse      = Matter.Mouse;
 const MouseConstraint = Matter.MouseConstraint;
 
+//写真用
+base64Image = "empty";
+
 // 現在のURLからクエリパラメータを取得
 const params = new URLSearchParams(window.location.search);
 
@@ -447,6 +450,20 @@ async function engine(){
 			boostContentStatus.style.display = 'flex';
 			boostContentStatus.style.height = boostButtonHeight + 'px';
 			detailFlag = false;
+
+			const reader = new FileReader();
+			boostContentStatus.style.display = 'flex';
+			boostContentStatus.style.height = boostButtonHeight + 'px';
+			detailFlag = false;
+
+			reader.onload = function(e) {
+				const base64Image = e.target.result;
+				console.log(base64Image);
+			}
+			reader.onerror = function(err){
+				console.error("エラーが発生しました:",err);
+			}
+			reader.readAsDataURL(selectedFile);
 		}
 	});
 
@@ -484,3 +501,5 @@ async function engine(){
 		}
 	});
 }
+
+
