@@ -78,7 +78,7 @@ async function getVotes() {
 		});
 		
 				// 投票タイトルを埋め込む
-		document.getElementById('title').innerText = datas[question];
+		document.getElementById('title').innerText = datas["question"];
 
 		//console.log(total);
 
