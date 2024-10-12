@@ -455,41 +455,6 @@ async function engine(){
 			boostContentStatus.style.display = 'flex';
 			boostContentStatus.style.height = boostButtonHeight + 'px';
 			detailFlag = false;
-
-			reader.onload = function(e) {
-				const img = new Image();
-				img.src = e.target.result;
-
-				img.onload = function() {
-					const canvas = document.createElement('canvas');
-					const maxFileSize = 1024 * 1024; // 1MB in bytes
-
-					let width = img.width;
-					let height = img.height;
-					const fileSize = selectedFile.size;
-
-					// サイズが1MBを超える場合、解像度を下げる
-					if (fileSize > maxFileSize) {
-						const scaleFactor = Math.sqrt(maxFileSize / fileSize);
-						width *= scaleFactor;
-						height *= scaleFactor;
-					}
-
-					// キャンバスに画像を描画して解像度を変更
-					canvas.width = width;
-					canvas.height = height;
-					const ctx = canvas.getContext('2d');
-					ctx.drawImage(img, 0, 0, width, height);
-
-					// 再エンコードしてBase64に変換
-					base64Image = canvas.toDataURL('image/jpeg', 0.8); // Quality is set to 0.8 for further compression
-					console.log(base64Image);
-				};
-			};
-			reader.onerror = function(err){
-				console.error("エラーが発生しました:",err);
-			}
-			reader.readAsDataURL(selectedFile);
 		}
 	});
 
