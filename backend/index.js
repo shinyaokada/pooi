@@ -42,9 +42,9 @@ app.get('/', async (req, res) => {
             3: await votesCollection.countDocuments({ choice: 3 })
         };
         const choices = [
-            { id: 1, name: "とりにく", color: "#FF5900", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
-            { id: 2, name: "ぎゅうにく", color: "#1e00ff", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
-            { id: 3, name: "ぶたにく", color: "#15792f", percent: totalVotes ? Math.round(choicesCount[3] / totalVotes * 100) : 0 }
+            { id: 1, name: "鶏肉", color: "#FF5900", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
+            { id: 2, name: "牛肉", color: "#1e00ff", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
+            { id: 3, name: "豚肉", color: "#15792f", percent: totalVotes ? Math.round(choicesCount[3] / totalVotes * 100) : 0 }
         ];
 
         res.json(choices);
