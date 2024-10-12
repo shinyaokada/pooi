@@ -466,7 +466,7 @@ async function engine(){
 
 					let width = img.width;
 					let height = img.height;
-					const fileSize = file.size;
+					const fileSize = selectedFile.size;
 
 					// サイズが1MBを超える場合、解像度を下げる
 					if (fileSize > maxFileSize) {
