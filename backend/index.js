@@ -46,8 +46,9 @@ app.get('/', async (req, res) => {
             { id: 2, name: "牛肉", color: "#1e00ff", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
             { id: 3, name: "豚肉", color: "#15792f", percent: totalVotes ? Math.round(choicesCount[3] / totalVotes * 100) : 0 }
         ];
-        const data = {choices:choices,msg:"ok"}
-        res.json(choices);
+        const question = "質問内容"
+        const data = {choices:choices,msg:"ok",question:question}
+        res.json(data);
     } catch (err) {
         res.status(500).json({ message: 'データベースへの接続に失敗しました', error: err.message });
     }
