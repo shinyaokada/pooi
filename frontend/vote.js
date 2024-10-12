@@ -45,9 +45,10 @@ async function getVotes() {
 	try {
 		
 		const response = await fetch(BACKENDURL);
-		choices = await response.json();
-		console.log(choices)
-		
+		datas = await response.json();
+		console.log(datas);
+		choices = datas["choices"];
+		console.log(choices)		
 	  // 選択肢を繰り返し生成して配置
 		const choicesContainer = document.getElementById("choices");
 		choices.forEach((choice) => {
