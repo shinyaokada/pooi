@@ -113,6 +113,22 @@ async function submitVote(choice,kind) {
         console.error('Error submitting vote:', error);
       }
     }
+async function postStatus (statusValue){
+	try {
+        const response = await fetch(BACKENDURL+"/status", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status : statusValue})
+        });
+        const data = await response.json();
+		console.log(data)
+
+      } catch (error) {
+        console.error('Error submitting status:', error);
+      }
+}
 // let choices = [
 //     { id: 1, name: "選択肢A", color: "#FF5900", percent: 55 },
 //     { id: 2, name: "選択肢B", color: "#1e00ff", percent: 3 },
@@ -443,9 +459,13 @@ async function engine(){
 				boostContentStatus.style.height = '0px';
 				detailButton.innerHTML = "<p>詳細を見る</p>";
 				guideLetter.innerHTML = "<p><span>二倍投票玉へグレードアップ完了!</span><br>投票玉をタップしながら<br>どちらかへスワイプしよう!</p>"
+				console.log(document.statusForm.status[i].value);
+				postStatus(document.statusForm.status[i].value);
 			}
 		}
 	});
+
+
 	
 	// ディティールボタンを押したらコンテンツを開く
 	const detailButton = document.getElementById("detailButton")

@@ -81,3 +81,16 @@ app.post('/', async (req, res) => {
         res.status(502).json({ error: 'Noooo' });
     }
 });
+
+app.post('/status', async (req, res) => {
+    const { status } = req.body;
+    if (![1, 2, 3].includes(choice)) {
+        return res.status(401).json({ error: 'Invalid choice' });
+    }
+    try {
+        res.json({ msg: 'status received. Thank you.', status: status });
+    } catch (error) {
+        console.error(error);
+        res.status(502).json({ error: 'No' });
+    }
+});
