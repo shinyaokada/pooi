@@ -31,6 +31,9 @@ const Events     = Matter.Events;
 const Mouse      = Matter.Mouse;
 const MouseConstraint = Matter.MouseConstraint;
 
+//写真用
+base64Image = "empty";
+
 // 現在のURLからクエリパラメータを取得
 const params = new URLSearchParams(window.location.search);
 
@@ -122,7 +125,7 @@ async function postStatus (statusValue){
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ status : statusValue})
+          body: JSON.stringify({ status : statusValue, base64Image : base64Image})
         });
         const data = await response.json();
 		console.log(data)
@@ -447,6 +450,46 @@ async function engine(){
 			boostContentStatus.style.display = 'flex';
 			boostContentStatus.style.height = boostButtonHeight + 'px';
 			detailFlag = false;
+
+			const reader = new FileReader();
+			boostContentStatus.style.display = 'flex';
+			boostContentStatus.style.height = boostButtonHeight + 'px';
+			detailFlag = false;
+
+			reader.onload = function(e) {
+				const img = new Image();
+				img.src = e.target.result;
+
+				img.onload = function() {
+					const canvas = document.createElement('canvas');
+					const maxFileSize = 1024 * 1024; // 1MB in bytes
+
+					let width = img.width;
+					let height = img.height;
+					const fileSize = selectedFile.size;
+
+					// サイズが1MBを超える場合、解像度を下げる
+					if (fileSize > maxFileSize) {
+						const scaleFactor = Math.sqrt(maxFileSize / fileSize);
+						width *= scaleFactor;
+						height *= scaleFactor;
+					}
+
+					// キャンバスに画像を描画して解像度を変更
+					canvas.width = width;
+					canvas.height = height;
+					const ctx = canvas.getContext('2d');
+					ctx.drawImage(img, 0, 0, width, height);
+
+					// 再エンコードしてBase64に変換
+					base64Image = canvas.toDataURL('image/jpeg', 0.8); // Quality is set to 0.8 for further compression
+					console.log(base64Image);
+				};
+			};
+			reader.onerror = function(err){
+				console.error("エラーが発生しました:",err);
+			}
+			reader.readAsDataURL(selectedFile);
 		}
 	});
 
@@ -484,7 +527,6 @@ async function engine(){
 		}
 	});
 }
-
 
 // チュートリアル
 const swiper = new Swiper(".swiper", {
