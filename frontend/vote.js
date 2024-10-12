@@ -528,4 +528,20 @@ async function engine(){
 	});
 }
 
+// チュートリアル
+const swiper = new Swiper(".swiper", {
+	// ページネーションが必要なら追加
+	pagination: {
+	  el: ".swiper-pagination"
+	},
+	// ナビボタンが必要なら追加
+	navigation: {
+	  nextEl: ".swiper-button-next",
+	  prevEl: ".swiper-button-prev"
+	}
+});
 
+// チュートリアルを追えるボタン
+document.getElementById("endTutorialButton").addEventListener("click", function() {
+	document.getElementById("tutorial").style.display = "none";
+});
