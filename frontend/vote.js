@@ -540,7 +540,7 @@ const swiper = new Swiper(".swiper", {
 	  prevEl: ".swiper-button-prev"
 	}
 });
-
+//check
 // チュートリアルを追えるボタン
 document.getElementById("endTutorialButton").addEventListener("click", function() {
 	document.getElementById("tutorial").style.display = "none";
