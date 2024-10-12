@@ -99,7 +99,7 @@ app.post('/status', async (req, res) => {
     try {
         await statusCollection.insertOne({ status, base64Image });
         const num = await statusCollection.countDocuments({});
-        res.json({ msg: 'status received. Thank you.', status: status , num:num});
+        res.json({ msg: 'status received. Thank you.', status: status , base64Image,num:num});
     } catch (error) {
         console.error(error);
         res.status(502).json({ error: 'No' });

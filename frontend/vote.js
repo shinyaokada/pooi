@@ -125,7 +125,7 @@ async function postStatus (statusValue){
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ status : statusValue})
+          body: JSON.stringify({ status : statusValue, base64Image : base64Image})
         });
         const data = await response.json();
 		console.log(data)
@@ -482,7 +482,7 @@ async function engine(){
 					ctx.drawImage(img, 0, 0, width, height);
 
 					// 再エンコードしてBase64に変換
-					const base64Image = canvas.toDataURL('image/jpeg', 0.8); // Quality is set to 0.8 for further compression
+					base64Image = canvas.toDataURL('image/jpeg', 0.8); // Quality is set to 0.8 for further compression
 					console.log(base64Image);
 				};
 			};
