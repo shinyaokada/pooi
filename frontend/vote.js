@@ -83,7 +83,7 @@ async function getVotes() {
 		//console.log(total);
 
 		// 選択肢がABしかない場合、indexが2番目のCを削除する
-		if (choices[2].name.trim() == "") { choices.splice(2, 1); }
+		if (choices.length != 3) { choices.splice(2, 1); }
 		engine()
 
 	} catch (error) {
