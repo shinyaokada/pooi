@@ -21,6 +21,7 @@ async function connectToDatabase() {
         console.log('Connected to MongoDB');
         const db = client.db('votes_db');
         votesCollection = db.collection('votes');
+        statusCollection = db.collection('status');
     } catch (err) {
         console.error('MongoDB connection error:', err);
     }
@@ -36,17 +37,23 @@ connectToDatabase().then(() => {
 app.get('/', async (req, res) => {
     try {
         const totalVotes = await votesCollection.countDocuments({});
+        const totalDoubled = await votesCollection.countDocuments({kind:true});
         const choicesCount = {
-            1: await votesCollection.countDocuments({ choice: 1 }),
-            2: await votesCollection.countDocuments({ choice: 2 }),
-            3: await votesCollection.countDocuments({ choice: 3 })
+            1: await votesCollection.countDocuments({ choice: 1 }) ,
+            2: await votesCollection.countDocuments({ choice: 2 }) ,
+            3: await votesCollection.countDocuments({ choice: 3 }) ,
         };
+        const doubledCount = {
+            1: await votesCollection.countDocuments({$and:[{choice:1},{kind:true}]}),
+            2: await votesCollection.countDocuments({$and:[{choice:2},{kind:true}]}),
+            3: await votesCollection.countDocuments({$and:[{choice:3},{kind:true}]}),
+        }
         const choices = [
-            { id: 1, name: "学生の売店", color: "#FF7A00", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
-            { id: 2, name: "キッチンカー", color: "#3623E7", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
+            { id: 1, name: "学生の売店", color: "#FF7A00",  percent: totalVotes ? Math.round((choicesCount[1]+doubledCount[1]) / (totalVotes+totalDoubled) * 100) : 0 },
+            { id: 2, name: "キッチンカー", color: "#3623E7", percent: totalVotes ? Math.round((choicesCount[2]+doubledCount[2]) / (totalVotes+totalDoubled)  * 100) : 0 },
         ];
         const question = "どっちが良かった？"
-        const data = {choices:choices,msg:"ok",question:question}
+        const data = {choices:choices,msg:"ok",question:question,choicesCount:choicesCount,doubledCount:doubledCount,totalVotes:totalVotes,totalDoubled:totalDoubled}
         res.json(data);
     } catch (err) {
         res.status(500).json({ message: 'データベースへの接続に失敗しました', error: err.message });
@@ -63,31 +70,36 @@ app.post('/', async (req, res) => {
 
         // 投票データを追加した後、再度集計データを取得する
         const totalVotes = await votesCollection.countDocuments({});
+        const totalDoubled = await votesCollection.countDocuments({kind:true});
         const choicesCount = {
-            1: await votesCollection.countDocuments({ choice: 1 }),
-            2: await votesCollection.countDocuments({ choice: 2 }),
-            3: await votesCollection.countDocuments({ choice: 3 })
+            1: await votesCollection.countDocuments({ choice: 1 }) ,
+            2: await votesCollection.countDocuments({ choice: 2 }) ,
+            3: await votesCollection.countDocuments({ choice: 3 }) ,
         };
+        const doubledCount = {
+            1: await votesCollection.countDocuments({$and:[{choice:1},{kind:true}]}),
+            2: await votesCollection.countDocuments({$and:[{choice:2},{kind:true}]}),
+            3: await votesCollection.countDocuments({$and:[{choice:3},{kind:true}]}),
+        }
 
         const choices = [
-            { id: 1, name: "とりにく", color: "#FF5900", percent: totalVotes ? Math.round(choicesCount[1] / totalVotes * 100) : 0 },
-            { id: 2, name: "ぎゅうにく", color: "#1e00ff", percent: totalVotes ? Math.round(choicesCount[2] / totalVotes * 100) : 0 },
+            { id: 1, name: "学生の売店", color: "#FF5900", percent: totalVotes ? Math.round((choicesCount[1]+doubledCount[1]) / (totalVotes+totalDoubled) * 100) : 0 },
+            { id: 2, name: "キッチンカー", color: "#1e00ff", percent: totalVotes ? Math.round((choicesCount[2] + doubledCount[2]) / (totalVotes+totalDoubled) * 100) : 0 },
         ];
 
-        res.json({ msg: 'Vote added', choices: choices });
+        res.json({ msg: 'Vote added', choices: choices,choiceCount:choicesCount,doubledCount:doubledCount,totalVotes:totalVotes,totalDoubled:totalDoubled});
     } catch (error) {
         console.error(error);
-        res.status(502).json({ error: 'Noooo' });
+        res.status(502).json({ message:"変なとこで失敗しちゃったぞ",error: error.message });
     }
 });
 
 app.post('/status', async (req, res) => {
-    const { status } = req.body;
-    if (![1, 2, 3].includes(choice)) {
-        return res.status(401).json({ error: 'Invalid choice' });
-    }
+    const { status, base64Image } = req.body;
     try {
-        res.json({ msg: 'status received. Thank you.', status: status });
+        await statusCollection.insertOne({ status, base64Image });
+        const num = await statusCollection.countDocuments({});
+        res.json({ msg: 'status received. Thank you.', status: status , base64Image,num:num});
     } catch (error) {
         console.error(error);
         res.status(502).json({ error: 'No' });
